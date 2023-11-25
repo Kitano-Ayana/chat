@@ -1,0 +1,22 @@
+version: '3'
+
+volumes:
+  mysql_data:
+  node_modules_data:
+
+services:
+  chat:
+    build: ./docker
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "8000:80"
+  db:
+    image: mysql:8
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: dev
+      MYSQL_DATABASE: dev
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: dev
