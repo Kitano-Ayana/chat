@@ -57,3 +57,35 @@
         </form>
     </x-auth-card>
 </x-guest-layout>
+<script>
+    $(document).ready(function() {
+        $('#register-form').submit(function(e) {
+            e.preventDefault();
+
+            var name = $('#name').val();
+            var email = $('#email').val();
+            var password = $('#password').val();
+            var passwordConfirmation = $('#password_confirmation').val();
+
+            $.ajax({
+                url: '{{ route("api.register") }}',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    name: name,
+                    email: email,
+                    password: password,
+                    password_confirmation: passwordConfirmation
+                },
+                success: function(data) {
+                    console.log('Registration successful', data);
+                    // 登録成功時の処理（例：ログインページへのリダイレクト）
+                },
+                error: function(xhr, status, error) {
+                    console.log('Registration failed', xhr.responseText);
+                    // 登録失敗時の処理
+                }
+            });
+        });
+    });
+</script>
