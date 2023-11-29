@@ -54,3 +54,33 @@
         </form>
     </x-auth-card>
 </x-guest-layout>
+<script>
+    $(document).ready(function() {
+        $('#login-form').submit(function(e) {
+            e.preventDefault();
+
+            var email = $('#email').val();
+            var password = $('#password').val();
+            var remember = $('#remember_me').is(':checked');
+
+            $.ajax({
+                url: '{{ route("api.login") }}',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    email: email,
+                    password: password,
+                    remember: remember
+                },
+                success: function(data) {
+                    console.log('Login successful', data);
+                    // ログイン成功後の処理（例：リダイレクト）
+                },
+                error: function(xhr, status, error) {
+                    console.log('Login failed', xhr.responseText);
+                    // ログイン失敗時の処理
+                }
+            });
+        });
+    });
+</script>
